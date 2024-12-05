@@ -7,6 +7,7 @@ import { MessageCard } from "@/components/message/message-card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Filter } from 'lucide-react'
+import { FilterModal, FilterOptions } from "@/components/filter/filter-modal"
 
 // Define types for our data
 type Post = {
@@ -34,7 +35,7 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "John Doe",
         content: "Just posted something amazing! Check it out!",
-        timestamp: "2 hours ago",
+        timestamp: "29/11/2024",
         network: "twitter"
     },
     {
@@ -42,7 +43,7 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "Jane Smith",
         content: "Having a great day! How's everyone doing?",
-        timestamp: "5 hours ago",
+        timestamp: "29/11/2024",
         network: "facebook"
     },
     {
@@ -50,7 +51,7 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "Alice Johnson",
         content: "New blog post is up! Link in bio.",
-        timestamp: "1 day ago",
+        timestamp: "29/11/2024",
         network: "instagram"
     }
 ]
@@ -61,7 +62,7 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Alice Johnson",
         lastMessage: "Hey, how are you doing?",
-        timestamp: "10:30 AM",
+        timestamp: "29/11/2024",
         network: "twitter"
     },
     {
@@ -69,7 +70,7 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Bob Williams",
         lastMessage: "Did you see the latest update?",
-        timestamp: "Yesterday",
+        timestamp: "28/11/2024",
         network: "linkedin"
     },
     {
@@ -77,7 +78,7 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Charlie Brown",
         lastMessage: "Let's catch up soon!",
-        timestamp: "2 days ago",
+        timestamp: "30/11/2024",
         network: "facebook"
     }
 ]
@@ -87,24 +88,49 @@ export default function Home() {
     const [searchQuery, setSearchQuery] = useState("")
     const [filteredPosts, setFilteredPosts] = useState(allPosts)
     const [filteredMessages, setFilteredMessages] = useState(allMessages)
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+    const [filters, setFilters] = useState<FilterOptions>({
+        startDate: undefined,
+        endDate: undefined,
+        twitter: true,
+        facebook: true,
+        instagram: true,
+        linkedin: true,
+    })
 
     useEffect(() => {
+        const filterByDate = (item: Post | Message) => {
+            if (!filters.startDate && !filters.endDate) return true
+            const itemDate = new Date(item.timestamp)
+            /*if (filters.startDate && itemDate < filters.startDate) return false
+            if (filters.endDate && itemDate > filters.endDate) return false*/
+            return true
+        }
+
+        const filterByNetwork = (item: Post | Message) => {
+            return filters[item.network]
+        }
+
         if (activeView === "posts") {
             setFilteredPosts(
                 allPosts.filter(post =>
-                    post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    post.username.toLowerCase().includes(searchQuery.toLowerCase())
+                    (post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        post.username.toLowerCase().includes(searchQuery.toLowerCase())) &&
+                    filterByDate(post) &&
+                    filterByNetwork(post)
                 )
             )
         } else {
             setFilteredMessages(
                 allMessages.filter(message =>
-                    message.lastMessage.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    message.username.toLowerCase().includes(searchQuery.toLowerCase())
+                    (message.lastMessage.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        message.username.toLowerCase().includes(searchQuery.toLowerCase())) &&
+                    filterByDate(message) &&
+                    filterByNetwork(message)
                 )
             )
         }
-    }, [searchQuery, activeView])
+    }, [searchQuery, activeView, filters])
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
@@ -112,8 +138,12 @@ export default function Home() {
     }
 
     const handleFilter = () => {
-        // Implement filter logic here
-        console.log("Opening filter options")
+        setIsFilterModalOpen(true)
+    }
+
+    const handleApplyFilters = (newFilters: FilterOptions) => {
+        setFilters(newFilters)
+        setIsFilterModalOpen(false)
     }
 
     return (
@@ -169,6 +199,11 @@ export default function Home() {
                     </div>
                 )}
             </div>
+            <FilterModal
+                isOpen={isFilterModalOpen}
+                onClose={() => setIsFilterModalOpen(false)}
+                onApplyFilters={handleApplyFilters}
+            />
         </MainLayout>
     )
 }
