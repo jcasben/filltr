@@ -1,17 +1,20 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Button } from "../ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Heart, MessageCircle, MoreHorizontal, Share, Twitter, Facebook, Instagram, Linkedin } from 'lucide-react'
 
 interface PostCardProps {
     avatar: string
     username: string
     content: string
-    timestamp: string
+    day: string
+    month: string
+    year: string
+    hour: string
     network: 'twitter' | 'facebook' | 'instagram' | 'linkedin'
 }
 
-export function PostCard({ avatar, username, content, timestamp, network }: PostCardProps) {
+export function PostCard({ avatar, username, content, day, month, year, hour, network }: PostCardProps) {
     const NetworkIcon = {
         twitter: Twitter,
         facebook: Facebook,
@@ -33,7 +36,7 @@ export function PostCard({ avatar, username, content, timestamp, network }: Post
                     </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                    <p className="text-sm text-muted-foreground">{timestamp}</p>
+                    <p className="text-sm text-muted-foreground">{`${day}/${month}/${year} - ${hour}`}</p>
                     <Button variant="ghost" size="icon">
                         <MoreHorizontal className="h-4 w-4" />
                     </Button>

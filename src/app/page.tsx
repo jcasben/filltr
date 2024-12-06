@@ -15,7 +15,10 @@ type Post = {
     avatar: string;
     username: string;
     content: string;
-    timestamp: string;
+    day: string;
+    month: string;
+    year: string;
+    hour: string;
     network: 'twitter' | 'facebook' | 'instagram' | 'linkedin';
 }
 
@@ -24,7 +27,10 @@ type Message = {
     avatar: string;
     username: string;
     lastMessage: string;
-    timestamp: string;
+    day: string;
+    month: string;
+    year: string;
+    hour: string;
     network: 'twitter' | 'facebook' | 'instagram' | 'linkedin';
 }
 
@@ -35,7 +41,10 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "John Doe",
         content: "Just posted something amazing! Check it out!",
-        timestamp: "29/11/2024",
+        day: "15",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "twitter"
     },
     {
@@ -43,7 +52,10 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "Jane Smith",
         content: "Having a great day! How's everyone doing?",
-        timestamp: "29/11/2024",
+        day: "14",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "facebook"
     },
     {
@@ -51,7 +63,10 @@ const allPosts: Post[] = [
         avatar: "/placeholder.svg",
         username: "Alice Johnson",
         content: "New blog post is up! Link in bio.",
-        timestamp: "29/11/2024",
+        day: "13",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "instagram"
     }
 ]
@@ -62,7 +77,10 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Alice Johnson",
         lastMessage: "Hey, how are you doing?",
-        timestamp: "29/11/2024",
+        day: "15",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "twitter"
     },
     {
@@ -70,7 +88,10 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Bob Williams",
         lastMessage: "Did you see the latest update?",
-        timestamp: "28/11/2024",
+        day: "14",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "linkedin"
     },
     {
@@ -78,7 +99,10 @@ const allMessages: Message[] = [
         avatar: "/placeholder.svg",
         username: "Charlie Brown",
         lastMessage: "Let's catch up soon!",
-        timestamp: "30/11/2024",
+        day: "13",
+        month: "05",
+        year: "2023",
+        hour: "10:19",
         network: "facebook"
     }
 ]
@@ -101,9 +125,15 @@ export default function Home() {
     useEffect(() => {
         const filterByDate = (item: Post | Message) => {
             if (!filters.startDate && !filters.endDate) return true
-            const itemDate = new Date(item.timestamp)
-            /*if (filters.startDate && itemDate < filters.startDate) return false
-            if (filters.endDate && itemDate > filters.endDate) return false*/
+            const itemDate = new Date(`${item.year}-${item.month}-${item.day}`)
+            if (filters.startDate) {
+                const startDate = new Date(`${filters.startDate.year}-${filters.startDate.month}-${filters.startDate.day}`)
+                if (itemDate < startDate) return false
+            }
+            if (filters.endDate) {
+                const endDate = new Date(`${filters.endDate.year}-${filters.endDate.month}-${filters.endDate.day}`)
+                if (itemDate > endDate) return false
+            }
             return true
         }
 
@@ -111,26 +141,18 @@ export default function Home() {
             return filters[item.network]
         }
 
-        if (activeView === "posts") {
-            setFilteredPosts(
-                allPosts.filter(post =>
-                    (post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        post.username.toLowerCase().includes(searchQuery.toLowerCase())) &&
-                    filterByDate(post) &&
-                    filterByNetwork(post)
-                )
-            )
-        } else {
-            setFilteredMessages(
-                allMessages.filter(message =>
-                    (message.lastMessage.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        message.username.toLowerCase().includes(searchQuery.toLowerCase())) &&
-                    filterByDate(message) &&
-                    filterByNetwork(message)
-                )
-            )
+        const filterItem = (item: Post | Message) => {
+            const matchesSearch =
+                item.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                ('content' in item
+                    ? item.content.toLowerCase().includes(searchQuery.toLowerCase())
+                    : item.lastMessage.toLowerCase().includes(searchQuery.toLowerCase()))
+            return matchesSearch && filterByDate(item) && filterByNetwork(item)
         }
-    }, [searchQuery, activeView, filters])
+
+        setFilteredPosts(allPosts.filter(filterItem))
+        setFilteredMessages(allMessages.filter(filterItem))
+    }, [searchQuery, filters, allPosts, allMessages])
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
@@ -171,7 +193,10 @@ export default function Home() {
                                 avatar={post.avatar}
                                 username={post.username}
                                 content={post.content}
-                                timestamp={post.timestamp}
+                                day={post.day}
+                                month={post.month}
+                                year={post.year}
+                                hour={post.hour}
                                 network={post.network}
                             />
                         ))}
@@ -189,7 +214,10 @@ export default function Home() {
                                 avatar={message.avatar}
                                 username={message.username}
                                 lastMessage={message.lastMessage}
-                                timestamp={message.timestamp}
+                                day={message.day}
+                                month={message.month}
+                                year={message.year}
+                                hour={message.hour}
                                 network={message.network}
                             />
                         ))}

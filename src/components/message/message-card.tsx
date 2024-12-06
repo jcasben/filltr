@@ -1,16 +1,19 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Card, CardContent } from "../ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
 import { Twitter, Facebook, Instagram, Linkedin } from 'lucide-react'
 
 interface MessageCardProps {
     avatar: string
     username: string
     lastMessage: string
-    timestamp: string
+    day: string
+    month: string
+    year: string
+    hour: string
     network: 'twitter' | 'facebook' | 'instagram' | 'linkedin'
 }
 
-export function MessageCard({ avatar, username, lastMessage, timestamp, network }: MessageCardProps) {
+export function MessageCard({ avatar, username, lastMessage, day, month, year, hour, network }: MessageCardProps) {
     const NetworkIcon = {
         twitter: Twitter,
         facebook: Facebook,
@@ -32,7 +35,7 @@ export function MessageCard({ avatar, username, lastMessage, timestamp, network 
                     </div>
                     <p className="text-sm text-muted-foreground truncate">{lastMessage}</p>
                 </div>
-                <div className="text-xs text-muted-foreground">{timestamp}</div>
+                <div className="text-xs text-muted-foreground">{`${day}/${month}/${year} - ${hour}`}</div>
             </CardContent>
         </Card>
     )
