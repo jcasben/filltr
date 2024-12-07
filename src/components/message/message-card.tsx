@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { Twitter, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface MessageCardProps {
     avatar: string
@@ -11,9 +12,11 @@ interface MessageCardProps {
     year: string
     hour: string
     network: 'twitter' | 'facebook' | 'instagram' | 'linkedin'
+    isSelected: boolean
+    onSelect: (isSelected: boolean) => void
 }
 
-export function MessageCard({ avatar, username, lastMessage, day, month, year, hour, network }: MessageCardProps) {
+export function MessageCard({ avatar, username, lastMessage, day, month, year, hour, network, isSelected, onSelect }: MessageCardProps) {
     const NetworkIcon = {
         twitter: Twitter,
         facebook: Facebook,
@@ -24,6 +27,11 @@ export function MessageCard({ avatar, username, lastMessage, day, month, year, h
     return (
         <Card className="mb-2">
             <CardContent className="p-4 flex items-center space-x-4">
+                <Checkbox
+                    checked={isSelected}
+                    onCheckedChange={onSelect}
+                    className="mr-2"
+                />
                 <Avatar className="h-12 w-12">
                     <AvatarImage src={avatar} />
                     <AvatarFallback>UN</AvatarFallback>
@@ -40,4 +48,3 @@ export function MessageCard({ avatar, username, lastMessage, day, month, year, h
         </Card>
     )
 }
-

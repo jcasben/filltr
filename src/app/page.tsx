@@ -1,13 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import {useState, useEffect} from "react"
 import MainLayout from "@/components/layout/main-layout"
-import { PostCard } from "@/components/post/post-card"
-import { MessageCard } from "@/components/message/message-card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Filter } from 'lucide-react'
-import { FilterModal, FilterOptions } from "@/components/filter/filter-modal"
+import {PostCard} from "@/components/post/post-card"
+import {MessageCard} from "@/components/message/message-card"
+import {Input} from "@/components/ui/input"
+import {Button} from "@/components/ui/button"
+import {Filter, MessageSquare, X, Check} from 'lucide-react'
+import {FilterModal, FilterOptions} from "@/components/filter/filter-modal"
+import {MultiReply} from "@/components/message/multi-reply"
+import {Snackbar} from "@/components/ui/snackbar"
 
 // Define types for our data
 type Post = {
@@ -121,6 +123,9 @@ export default function Home() {
         instagram: true,
         linkedin: true,
     })
+    const [selectedMessages, setSelectedMessages] = useState<number[]>([])
+    const [isMultiReplyActive, setIsMultiReplyActive] = useState(false)
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false)
 
     useEffect(() => {
         const filterByDate = (item: Post | Message) => {
@@ -168,6 +173,77 @@ export default function Home() {
         setIsFilterModalOpen(false)
     }
 
+    const handleMessageSelect = (id: number, isSelected: boolean) => {
+        setSelectedMessages(prev =>
+            isSelected ? [...prev, id] : prev.filter(messageId => messageId !== id)
+        )
+    }
+
+    const handleReplyAll = () => {
+        if (selectedMessages.length === filteredMessages.length) {
+            // If all messages are selected, deselect all and hide reply panel
+            setSelectedMessages([])
+            setIsMultiReplyActive(false)
+        } else {
+            // Otherwise, select all messages
+            setSelectedMessages(filteredMessages.map(message => message.id))
+        }
+    }
+
+    const handleMultiReplyActivate = () => {
+        if (selectedMessages.length > 0) {
+            setIsMultiReplyActive(true)
+        }
+    }
+
+    const handleMultiReplyCancel = () => {
+        setIsMultiReplyActive(false)
+    }
+
+    const handleMultiReplySend = (message: string) => {
+        console.log(`Sending "${message}" to messages with IDs:`, selectedMessages)
+        setIsMultiReplyActive(false)
+        setSelectedMessages([])
+        setIsSnackbarVisible(true)
+    }
+
+    const replyAllButton = () => {
+        if (selectedMessages.length === 0) {
+            return (
+                <Button
+                    onClick={handleReplyAll}
+                    size="sm"
+                    variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                >
+                    <MessageSquare className="h-4 w-4 mr-2"/>
+                    Reply All
+                </Button>
+            )
+        } else if (selectedMessages.length < filteredMessages.length) {
+            return (
+                <Button
+                    onClick={handleReplyAll}
+                    size="sm"
+                    variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                >
+                    <Check className="h-4 w-4 mr-2"/>
+                    Select All
+                </Button>
+            )
+        } else {
+            return (
+                <Button
+                    onClick={handleReplyAll}
+                    size="sm"
+                    variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                >
+                    <X className="h-4 w-4 mr-2"/>
+                    Deselect All
+                </Button>
+            )
+        }
+    }
+
     return (
         <MainLayout activeView={activeView} setActiveView={setActiveView}>
             <div className="space-y-4">
@@ -180,7 +256,7 @@ export default function Home() {
                         className="flex-grow"
                     />
                     <Button type="button" variant="outline" onClick={handleFilter}>
-                        <Filter className="h-4 w-4" />
+                        <Filter className="h-4 w-4"/>
                     </Button>
                 </form>
 
@@ -207,7 +283,21 @@ export default function Home() {
                 )}
                 {activeView === "messages" && (
                     <div className="messages">
-                        <h2 className="text-lg font-semibold mb-2">Messages</h2>
+                        <div className="flex justify-between items-center mb-2">
+                            <h2 className="text-lg font-semibold">Messages</h2>
+                            <div className="space-x-2">
+                                {replyAllButton()}
+                                {selectedMessages.length > 0 && (
+                                    <Button
+                                        onClick={handleMultiReplyActivate}
+                                        size="sm"
+                                    >
+                                        <MessageSquare className="h-4 w-4 mr-2"/>
+                                        Reply to Selected
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
                         {filteredMessages.map(message => (
                             <MessageCard
                                 key={message.id}
@@ -219,6 +309,8 @@ export default function Home() {
                                 year={message.year}
                                 hour={message.hour}
                                 network={message.network}
+                                isSelected={selectedMessages.includes(message.id)}
+                                onSelect={(isSelected) => handleMessageSelect(message.id, isSelected)}
                             />
                         ))}
                         {filteredMessages.length === 0 && (
@@ -227,10 +319,21 @@ export default function Home() {
                     </div>
                 )}
             </div>
+            {isMultiReplyActive && selectedMessages.length > 0 && (
+                <MultiReply
+                    onSend={handleMultiReplySend}
+                    onCancel={handleMultiReplyCancel}
+                />
+            )}
             <FilterModal
                 isOpen={isFilterModalOpen}
                 onClose={() => setIsFilterModalOpen(false)}
                 onApplyFilters={handleApplyFilters}
+            />
+            <Snackbar
+                message="Replied to messages successfully!"
+                isVisible={isSnackbarVisible}
+                onClose={() => setIsSnackbarVisible(false)}
             />
         </MainLayout>
     )
