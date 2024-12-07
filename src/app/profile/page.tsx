@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import MainLayout from "@/components/layout/main-layout"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Facebook, Twitter, Instagram, Linkedin, LogOut, Plus } from 'lucide-react'
+import {useState} from "react"
+import {MainLayout} from "@/components/layout/main-layout"
+import {Button} from "@/components/ui/button"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import {Switch} from "@/components/ui/switch"
+import {Label} from "@/components/ui/label"
+import {Facebook, Twitter, Instagram, Linkedin, LogOut, Plus} from 'lucide-react'
 
 export default function ProfilePage() {
     const [connectedAccounts, setConnectedAccounts] = useState({
@@ -23,11 +23,11 @@ export default function ProfilePage() {
     })
 
     const toggleAccount = (account: keyof typeof connectedAccounts) => {
-        setConnectedAccounts(prev => ({ ...prev, [account]: !prev[account] }))
+        setConnectedAccounts(prev => ({...prev, [account]: !prev[account]}))
     }
 
     const toggleSetting = (setting: keyof typeof notificationSettings) => {
-        setNotificationSettings(prev => ({ ...prev, [setting]: !prev[setting] }))
+        setNotificationSettings(prev => ({...prev, [setting]: !prev[setting]}))
     }
 
     const handleLogout = () => {
@@ -46,7 +46,7 @@ export default function ProfilePage() {
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold">Profile</h1>
                     <Button variant="destructive" onClick={handleLogout}>
-                        <LogOut className="mr-2 h-4 w-4" /> Logout
+                        <LogOut className="mr-2 h-4 w-4"/> Logout
                     </Button>
                 </div>
 
@@ -58,7 +58,7 @@ export default function ProfilePage() {
                     <CardContent className="grid gap-6">
                         <div className="flex items-center justify-between space-x-4">
                             <div className="flex items-center space-x-4">
-                                <Facebook className="w-6 h-6 text-blue-600" />
+                                <Facebook className="w-6 h-6 text-blue-600"/>
                                 <span>Facebook</span>
                             </div>
                             <Switch
@@ -68,7 +68,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="flex items-center justify-between space-x-4">
                             <div className="flex items-center space-x-4">
-                                <Twitter className="w-6 h-6 text-blue-400" />
+                                <Twitter className="w-6 h-6 text-blue-400"/>
                                 <span>Twitter</span>
                             </div>
                             <Switch
@@ -78,7 +78,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="flex items-center justify-between space-x-4">
                             <div className="flex items-center space-x-4">
-                                <Instagram className="w-6 h-6 text-pink-500" />
+                                <Instagram className="w-6 h-6 text-pink-500"/>
                                 <span>Instagram</span>
                             </div>
                             <Switch
@@ -88,7 +88,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="flex items-center justify-between space-x-4">
                             <div className="flex items-center space-x-4">
-                                <Linkedin className="w-6 h-6 text-blue-700" />
+                                <Linkedin className="w-6 h-6 text-blue-700"/>
                                 <span>LinkedIn</span>
                             </div>
                             <Switch
@@ -97,7 +97,7 @@ export default function ProfilePage() {
                             />
                         </div>
                         <Button onClick={handleAddSocialMedia} className="w-full">
-                            <Plus className="mr-2 h-4 w-4" /> Add Social Media Account
+                            <Plus className="mr-2 h-4 w-4"/> Add Social Media Account
                         </Button>
                     </CardContent>
                 </Card>

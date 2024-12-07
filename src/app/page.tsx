@@ -1,15 +1,16 @@
 "use client"
 
-import {useState, useEffect} from "react"
-import MainLayout from "@/components/layout/main-layout"
+import React, {useState, useEffect} from "react"
+import {MainLayout} from "@/components/layout/main-layout"
 import {PostCard} from "@/components/post/post-card"
 import {MessageCard} from "@/components/message/message-card"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
-import {Filter, MessageSquare, X, Check} from 'lucide-react'
+import { Filter, MessageSquare, X, Check } from 'lucide-react'
 import {FilterModal, FilterOptions} from "@/components/filter/filter-modal"
 import {MultiReply} from "@/components/message/multi-reply"
 import {Snackbar} from "@/components/ui/snackbar"
+import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
 
 // Define types for our data
 type Post = {
@@ -110,7 +111,7 @@ const allMessages: Message[] = [
 ]
 
 export default function Home() {
-    const [activeView, setActiveView] = useState("posts")
+    const [activeView, setActiveView] = useState("messages")
     const [searchQuery, setSearchQuery] = useState("")
     const [filteredPosts, setFilteredPosts] = useState(allPosts)
     const [filteredMessages, setFilteredMessages] = useState(allMessages)
@@ -212,10 +213,11 @@ export default function Home() {
             return (
                 <Button
                     onClick={handleReplyAll}
-                    size="sm"
+                    size="lg"
                     variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                    className="flex-1 mb-4 bg-blue-600 hover:bg-blue-700 text-white hover:text-white"
                 >
-                    <MessageSquare className="h-4 w-4 mr-2"/>
+                    <MessageSquare className="h-5 w-5 mr-2"/>
                     Reply All
                 </Button>
             )
@@ -223,10 +225,11 @@ export default function Home() {
             return (
                 <Button
                     onClick={handleReplyAll}
-                    size="sm"
+                    size="lg"
                     variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                    className="flex-1 mb-4"
                 >
-                    <Check className="h-4 w-4 mr-2"/>
+                    <Check className="h-5 w-5 mr-2"/>
                     Select All
                 </Button>
             )
@@ -234,10 +237,11 @@ export default function Home() {
             return (
                 <Button
                     onClick={handleReplyAll}
-                    size="sm"
+                    size="lg"
                     variant={selectedMessages.length === filteredMessages.length ? "default" : "outline"}
+                    className="flex-1 mb-4"
                 >
-                    <X className="h-4 w-4 mr-2"/>
+                    <X className="h-5 w-5 mr-2"/>
                     Deselect All
                 </Button>
             )
@@ -245,12 +249,33 @@ export default function Home() {
     }
 
     return (
-        <MainLayout activeView={activeView} setActiveView={setActiveView}>
+        <MainLayout>
+            <div className="bg-primary/10 p-3 rounded-lg mb-4">
+                <ToggleGroup
+                    type="single"
+                    value={activeView}
+                    onValueChange={(value) => value && setActiveView(value)}
+                    className="flex justify-center w-full"
+                >
+                    <ToggleGroupItem
+                        value="messages"
+                        className="w-1/2 px-3 py-2 text-base font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                    >
+                        Messages
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                        value="posts"
+                        className="w-1/2 px-3 py-2 text-base font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                    >
+                        Posts
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </div>
             <div className="space-y-4">
                 <form onSubmit={handleSearch} className="flex space-x-2">
                     <Input
                         type="text"
-                        placeholder="Search posts and messages..."
+                        placeholder="Search by name, keywords..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="flex-grow"
@@ -262,7 +287,6 @@ export default function Home() {
 
                 {activeView === "posts" && (
                     <div className="posts">
-                        <h2 className="text-lg font-semibold mb-2">Posts</h2>
                         {filteredPosts.map(post => (
                             <PostCard
                                 key={post.id}
@@ -283,20 +307,18 @@ export default function Home() {
                 )}
                 {activeView === "messages" && (
                     <div className="messages">
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-lg font-semibold">Messages</h2>
-                            <div className="space-x-2">
-                                {replyAllButton()}
-                                {selectedMessages.length > 0 && (
-                                    <Button
-                                        onClick={handleMultiReplyActivate}
-                                        size="sm"
-                                    >
-                                        <MessageSquare className="h-4 w-4 mr-2"/>
-                                        Reply to Selected
-                                    </Button>
-                                )}
-                            </div>
+                        <div className="flex space-x-2 mb-4">
+                            {replyAllButton()}
+                            {selectedMessages.length > 0 && (
+                                <Button
+                                    onClick={handleMultiReplyActivate}
+                                    size="lg"
+                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white hover:text-white"
+                                >
+                                    <MessageSquare className="h-5 w-5 mr-2"/>
+                                    Reply to Selected
+                                </Button>
+                            )}
                         </div>
                         {filteredMessages.map(message => (
                             <MessageCard
@@ -314,7 +336,8 @@ export default function Home() {
                             />
                         ))}
                         {filteredMessages.length === 0 && (
-                            <p className="text-center text-gray-500 mt-4">No messages found matching your search.</p>
+                            <p className="text-center text-gray-500 mt-4">No messages found matching your
+                                search.</p>
                         )}
                     </div>
                 )}
