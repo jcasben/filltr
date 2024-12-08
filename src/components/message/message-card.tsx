@@ -26,25 +26,30 @@ export function MessageCard({ avatar, username, lastMessage, day, month, year, h
 
     return (
         <Card className="mb-2">
-            <CardContent className="p-4 flex items-center space-x-4">
-                <Checkbox
-                    checked={isSelected}
-                    onCheckedChange={onSelect}
-                    className="mr-2"
-                />
-                <Avatar className="h-12 w-12">
-                    <AvatarImage src={avatar} />
-                    <AvatarFallback>UN</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                    <div className="flex items-center">
-                        <p className="text-sm font-medium truncate">{username}</p>
-                        <NetworkIcon className="h-4 w-4 ml-2 text-muted-foreground" />
+            <CardContent className="p-4">
+                <div className="flex items-start space-x-4">
+                    <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={onSelect}
+                        className="mt-1 mr-2"
+                    />
+                    <Avatar className="h-10 w-10 flex-shrink-0">
+                        <AvatarImage src={avatar} />
+                        <AvatarFallback>UN</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex items-center space-x-2">
+                                <p className="text-sm font-medium">{username}</p>
+                                <NetworkIcon className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1 sm:mt-0">{`${day}/${month}/${year} ${hour}`}</div>
+                        </div>
+                        <p className="text-sm text-muted-foreground break-words line-clamp-2 sm:line-clamp-none">{lastMessage}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground truncate">{lastMessage}</p>
                 </div>
-                <div className="text-xs text-muted-foreground">{`${day}/${month}/${year} - ${hour}`}</div>
             </CardContent>
         </Card>
     )
 }
+
