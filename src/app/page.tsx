@@ -41,74 +41,339 @@ type Message = {
 const allPosts: Post[] = [
     {
         id: 1,
-        avatar: "/placeholder.svg",
-        username: "John Doe",
-        content: "Just posted something amazing! Check it out!",
-        day: "15",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "twitter"
+        avatar: "https://example.com/avatar1.png",
+        username: "Alice Johnson",
+        content: "Had an amazing coffee this morning! ☕️ What's your favorite morning drink?",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "08:30",
+        network: "facebook",
     },
     {
         id: 2,
-        avatar: "/placeholder.svg",
-        username: "Jane Smith",
-        content: "Having a great day! How's everyone doing?",
-        day: "14",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "facebook"
+        avatar: "https://example.com/avatar2.png",
+        username: "Bob Williams",
+        content: "Just finished a 5-mile run! Feeling great! 💪🏃‍♂️ #fitness #motivation",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "09:15",
+        network: "twitter",
     },
     {
         id: 3,
-        avatar: "/placeholder.svg",
-        username: "Alice Johnson",
-        content: "New blog post is up! Link in bio.",
-        day: "13",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "instagram"
-    }
-]
+        avatar: "https://example.com/avatar3.png",
+        username: "Charlie Brown",
+        content: "Can’t believe how much this new project management tool has improved my workflow. Highly recommend! 🧑‍💻 #worktools",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "10:00",
+        network: "linkedin",
+    },
+    {
+        id: 4,
+        avatar: "https://example.com/avatar4.png",
+        username: "David Clark",
+        content: "Exploring new restaurants in the city! 🍝 What’s your favorite type of cuisine?",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "11:45",
+        network: "instagram",
+    },
+    {
+        id: 5,
+        avatar: "https://example.com/avatar5.png",
+        username: "Eva Turner",
+        content: "The new album from my favorite artist is out today! 🎶 You should definitely check it out.",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "12:30",
+        network: "facebook",
+    },
+    {
+        id: 6,
+        avatar: "https://example.com/avatar6.png",
+        username: "Frank Harris",
+        content: "Just signed up for a coding bootcamp! 🚀 I'm excited to dive deeper into Python!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "13:10",
+        network: "linkedin",
+    },
+    {
+        id: 7,
+        avatar: "https://example.com/avatar7.png",
+        username: "Grace Miller",
+        content: "Looking for some movie recommendations! What have you been watching lately? 🎬",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "14:00",
+        network: "instagram",
+    },
+    {
+        id: 8,
+        avatar: "https://example.com/avatar8.png",
+        username: "Hank Lewis",
+        content: "Got some new tech gadgets today! Time to test them out. 😎 #techlover",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "15:25",
+        network: "facebook",
+    },
+    {
+        id: 9,
+        avatar: "https://example.com/avatar9.png",
+        username: "Ivy Scott",
+        content: "Just wrapped up an amazing meeting with the team. So many exciting things ahead! 🚀",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "16:10",
+        network: "linkedin",
+    },
+    {
+        id: 10,
+        avatar: "https://example.com/avatar10.png",
+        username: "Jake Adams",
+        content: "Anyone know of good hiking trails in the area? I’m looking for new places to explore. 🏞️ #hikingadventures",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "17:00",
+        network: "instagram",
+    },
+    {
+        id: 11,
+        avatar: "https://example.com/avatar11.png",
+        username: "Karen Moore",
+        content: "It’s always a good time when I’m at the beach. Can’t get enough of the ocean breeze! 🌊 #beachlife",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "18:30",
+        network: "facebook",
+    },
+    {
+        id: 12,
+        avatar: "https://example.com/avatar12.png",
+        username: "Leo Harris",
+        content: "What are your thoughts on the latest AI developments? It’s getting crazy fast. 🤖 #artificialintelligence",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "19:15",
+        network: "twitter",
+    },
+    {
+        id: 13,
+        avatar: "https://example.com/avatar13.png",
+        username: "Mia Reed",
+        content: "Finally finished that book! Now on to the next one. 📚 What are you reading?",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "20:00",
+        network: "instagram",
+    },
+    {
+        id: 14,
+        avatar: "https://example.com/avatar14.png",
+        username: "Nina Carter",
+        content: "Got my hands on the new smartwatch! Excited to see what it can do. ⌚️ #gadgets",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "21:00",
+        network: "facebook",
+    },
+    {
+        id: 15,
+        avatar: "https://example.com/avatar15.png",
+        username: "Oscar Evans",
+        content: "It’s so cozy today! Perfect weather for a movie night. 🍿🎥 #cozyvibes",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "22:00",
+        network: "instagram",
+    },
+];
+
 
 const allMessages: Message[] = [
     {
         id: 1,
-        avatar: "/placeholder.svg",
+        avatar: "https://example.com/avatar1.png",
         username: "Alice Johnson",
-        lastMessage: "Hey, how are you doing?",
-        day: "15",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "twitter"
+        lastMessage: "Happy Birthday! 🎉 Wishing you all the best on your special day! 🥳",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "08:30",
+        network: "facebook",
     },
     {
         id: 2,
-        avatar: "/placeholder.svg",
-        username: "Bob Williams",
-        lastMessage: "Did you see the latest update?",
-        day: "14",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "linkedin"
+        avatar: "https://example.com/avatar2.png",
+        username: "Paul Mitchell",
+        lastMessage: "Just finished reading this amazing book! Can’t wait to share it with you. 📚",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "23:30",
+        network: "linkedin",
     },
     {
         id: 3,
-        avatar: "/placeholder.svg",
+        avatar: "https://example.com/avatar3.png",
         username: "Charlie Brown",
-        lastMessage: "Let's catch up soon!",
-        day: "13",
-        month: "05",
-        year: "2023",
-        hour: "10:19",
-        network: "facebook"
-    }
-]
+        lastMessage: "Hey, I heard there’s a new tech conference happening soon. We should go together!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "10:00",
+        network: "linkedin",
+    },
+    {
+        id: 4,
+        avatar: "https://example.com/avatar4.png",
+        username: "David Clark",
+        lastMessage: "Happy Birthday, hope you're enjoying your day! 🥳🎉 Have fun!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "11:45",
+        network: "instagram",
+    },
+    {
+        id: 5,
+        avatar: "https://example.com/avatar5.png",
+        username: "Eva Turner",
+        lastMessage: "Hey! Just saw that movie you recommended. It was so good! Let’s talk about it soon.",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "12:30",
+        network: "facebook",
+    },
+    {
+        id: 6,
+        avatar: "https://example.com/avatar6.png",
+        username: "Frank Harris",
+        lastMessage: "Happy Birthday! 🎉 Hope it’s a day full of happiness and surprises!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "13:10",
+        network: "linkedin",
+    },
+    {
+        id: 7,
+        avatar: "https://example.com/avatar7.png",
+        username: "Grace Miller",
+        lastMessage: "Got some new hiking boots today! Ready for our next adventure? 🏞️",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "14:00",
+        network: "instagram",
+    },
+    {
+        id: 8,
+        avatar: "https://example.com/avatar8.png",
+        username: "Hank Lewis",
+        lastMessage: "Happy Birthday! Hope you’re surrounded by love and joy today! 🎂🎉",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "15:25",
+        network: "facebook",
+    },
+    {
+        id: 9,
+        avatar: "https://example.com/avatar9.png",
+        username: "Ivy Scott",
+        lastMessage: "You’ve got to try this new restaurant, it’s amazing! Let me know when you’re free to go!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "16:10",
+        network: "linkedin",
+    },
+    {
+        id: 10,
+        avatar: "https://example.com/avatar10.png",
+        username: "Rachel King",
+        lastMessage: "I saw that new tech gadget online. It looks amazing! We should try it out together sometime.",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "00:45",
+        network: "twitter",
+    },
+    {
+        id: 11,
+        avatar: "https://example.com/avatar11.png",
+        username: "Karen Moore",
+        lastMessage: "Looking forward to the weekend getaway! Do you have any recommendations for places to visit?",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "18:30",
+        network: "facebook",
+    },
+    {
+        id: 12,
+        avatar: "https://example.com/avatar12.png",
+        username: "Leo Harris",
+        lastMessage: "Happy Birthday! 🎉 Hope you have a fantastic day filled with joy and laughter!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "19:15",
+        network: "twitter",
+    },
+    {
+        id: 13,
+        avatar: "https://example.com/avatar13.png",
+        username: "Mia Reed",
+        lastMessage: "What’s up with you lately? Let’s catch up soon!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "20:00",
+        network: "instagram",
+    },
+    {
+        id: 14,
+        avatar: "https://example.com/avatar14.png",
+        username: "Nina Carter",
+        lastMessage: "Happy Birthday! 🎉 Hope it’s filled with love and great memories!",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "21:00",
+        network: "facebook",
+    },
+    {
+        id: 15,
+        avatar: "https://example.com/avatar15.png",
+        username: "Oscar Evans",
+        lastMessage: "Can’t wait to see you at the concert this weekend! 🎶",
+        day: "07",
+        month: "12",
+        year: "2024",
+        hour: "22:00",
+        network: "instagram",
+    },
+];
 
 export default function Home() {
     const [activeView, setActiveView] = useState("messages")
@@ -287,6 +552,9 @@ export default function Home() {
 
                 {activeView === "posts" && (
                     <div className="posts">
+                        <p className="text-sm text-muted-foreground mb-2">
+                            Showing {filteredPosts.length} post{filteredPosts.length !== 1 ? 's' : ''}
+                        </p>
                         {filteredPosts.map(post => (
                             <PostCard
                                 key={post.id}
@@ -301,12 +569,17 @@ export default function Home() {
                             />
                         ))}
                         {filteredPosts.length === 0 && (
-                            <p className="text-center text-gray-500 mt-4">No posts found matching your search.</p>
+                            <p className="text-center text-gray-500 mt-4">
+                                No posts found matching your search (out of {allPosts.length} total posts).
+                            </p>
                         )}
                     </div>
                 )}
                 {activeView === "messages" && (
                     <div className="messages">
+                        <p className="text-sm text-muted-foreground mb-2">
+                            Showing {filteredMessages.length} message{filteredMessages.length !== 1 ? 's' : ''}
+                        </p>
                         <div className="flex space-x-2 mb-4">
                             {replyAllButton()}
                             {selectedMessages.length > 0 && (
@@ -336,8 +609,9 @@ export default function Home() {
                             />
                         ))}
                         {filteredMessages.length === 0 && (
-                            <p className="text-center text-gray-500 mt-4">No messages found matching your
-                                search.</p>
+                            <p className="text-center text-gray-500 mt-4">
+                                No messages found matching your search (out of {allMessages.length} total messages).
+                            </p>
                         )}
                     </div>
                 )}
