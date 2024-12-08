@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/providers/theme-provider"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Social Media Aggregator',
+  title: 'Filltr',
   description: 'An app that aggregates posts and messages from various social networks',
 }
 
