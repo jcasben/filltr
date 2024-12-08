@@ -96,7 +96,7 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
         <>
             <style jsx>{scrollbarStyles}</style>
             <Dialog open={isOpen} onOpenChange={onClose}>
-                <DialogContent className="sm:max-w-[450px] bg-white rounded-lg shadow-lg">
+                <DialogContent className="sm:max-w-[450px] bg-background dark:bg-gray-800 rounded-lg shadow-lg">
                     <DialogHeader>
                         <DialogTitle>Filter Options</DialogTitle>
                     </DialogHeader>
@@ -108,10 +108,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Day</Label>
                                     <Select value={startDate.day} onValueChange={(value) => setStartDate({ ...startDate, day: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Day" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {generateOptions(1, 31)}
                                         </SelectContent>
                                     </Select>
@@ -119,10 +119,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Month</Label>
                                     <Select value={startDate.month} onValueChange={(value) => setStartDate({ ...startDate, month: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Month" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {months.map(month => (
                                                 <SelectItem key={month} value={month}>{month}</SelectItem>
                                             ))}
@@ -132,10 +132,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Year</Label>
                                     <Select value={startDate.year} onValueChange={(value) => setStartDate({ ...startDate, year: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Year" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {years.map(year => (
                                                 <SelectItem key={year} value={year}>{year}</SelectItem>
                                             ))}
@@ -152,10 +152,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Day</Label>
                                     <Select value={endDate.day} onValueChange={(value) => setEndDate({ ...endDate, day: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Day" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {generateOptions(1, 31)}
                                         </SelectContent>
                                     </Select>
@@ -163,10 +163,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Month</Label>
                                     <Select value={endDate.month} onValueChange={(value) => setEndDate({ ...endDate, month: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Month" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {months.map(month => (
                                                 <SelectItem key={month} value={month}>{month}</SelectItem>
                                             ))}
@@ -176,10 +176,10 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                                 <div>
                                     <Label className="text-xs mb-1">Year</Label>
                                     <Select value={endDate.year} onValueChange={(value) => setEndDate({ ...endDate, year: value })}>
-                                        <SelectTrigger>
+                                        <SelectTrigger className="border-gray-300 dark:border-gray-600">
                                             <SelectValue placeholder="Year" />
                                         </SelectTrigger>
-                                        <SelectContent className="scrollable-select">
+                                        <SelectContent className="scrollable-select bg-white dark:bg-gray-700">
                                             {years.map(year => (
                                                 <SelectItem key={year} value={year}>{year}</SelectItem>
                                             ))}
@@ -195,25 +195,41 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                             <div className="mt-2 flex flex-wrap gap-2">
                                 <Button
                                     variant={twitter ? "default" : "outline"}
-                                    className="px-3 py-1 text-sm"
+                                    className={`px-3 py-1 text-sm ${
+                                        twitter
+                                            ? "bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                            : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600"
+                                    }`}
                                     onClick={() => setTwitter(!twitter)}>
                                     Twitter
                                 </Button>
                                 <Button
                                     variant={facebook ? "default" : "outline"}
-                                    className="px-3 py-1 text-sm"
+                                    className={`px-3 py-1 text-sm ${
+                                        facebook
+                                            ? "bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                            : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600"
+                                    }`}
                                     onClick={() => setFacebook(!facebook)}>
                                     Facebook
                                 </Button>
                                 <Button
                                     variant={instagram ? "default" : "outline"}
-                                    className="px-3 py-1 text-sm"
+                                    className={`px-3 py-1 text-sm ${
+                                        instagram
+                                            ? "bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                            : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600"
+                                    }`}
                                     onClick={() => setInstagram(!instagram)}>
                                     Instagram
                                 </Button>
                                 <Button
                                     variant={linkedin ? "default" : "outline"}
-                                    className="px-3 py-1 text-sm"
+                                    className={`px-3 py-1 text-sm ${
+                                        linkedin
+                                            ? "bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                            : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600"
+                                    }`}
                                     onClick={() => setLinkedin(!linkedin)}>
                                     LinkedIn
                                 </Button>
@@ -225,14 +241,14 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
                             <Button
                                 variant="outline"
                                 onClick={resetDateFilter}
-                                className="w-1/2 mr-2"
+                                className="w-1/2 mr-2 border-gray-300 dark:border-gray-600"
                             >
                                 Reset Date
                             </Button>
                             <Button
                                 variant="default"
                                 onClick={handleApplyFilters}
-                                className="w-1/2 ml-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                className="w-1/2 ml-2 bg-black hover:bg-gray-700 dark:bg-white dark:hover:bg-gray-300 text-white dark:text-black"
                             >
                                 Apply Filters
                             </Button>
@@ -243,4 +259,3 @@ export function FilterModal({ isOpen, onClose, onApplyFilters }: FilterModalProp
         </>
     )
 }
-
