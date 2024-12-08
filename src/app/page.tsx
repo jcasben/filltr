@@ -6,7 +6,7 @@ import {PostCard} from "@/components/post/post-card"
 import {MessageCard} from "@/components/message/message-card"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
-import { Filter, MessageSquare, X, Check } from 'lucide-react'
+import { Filter, MessageSquare, X, Check, Search } from 'lucide-react'
 import {FilterModal, FilterOptions} from "@/components/filter/filter-modal"
 import {MultiReply} from "@/components/message/multi-reply"
 import {Snackbar} from "@/components/ui/snackbar"
@@ -222,13 +222,13 @@ const allMessages: Message[] = [
     {
         id: 2,
         avatar: "https://example.com/avatar2.png",
-        username: "Paul Mitchell",
-        lastMessage: "Just finished reading this amazing book! Can’t wait to share it with you. 📚",
+        username: "Bob Williams",
+        lastMessage: "Happy Birthday! Hope you have an amazing celebration! 🎂",
         day: "07",
         month: "12",
         year: "2024",
-        hour: "23:30",
-        network: "linkedin",
+        hour: "09:15",
+        network: "twitter",
     },
     {
         id: 3,
@@ -310,13 +310,13 @@ const allMessages: Message[] = [
     {
         id: 10,
         avatar: "https://example.com/avatar10.png",
-        username: "Rachel King",
-        lastMessage: "I saw that new tech gadget online. It looks amazing! We should try it out together sometime.",
+        username: "Jake Adams",
+        lastMessage: "Happy Birthday, enjoy every moment of your day! 🥳",
         day: "07",
         month: "12",
         year: "2024",
-        hour: "00:45",
-        network: "twitter",
+        hour: "17:00",
+        network: "instagram",
     },
     {
         id: 11,
@@ -439,6 +439,10 @@ export default function Home() {
         setIsFilterModalOpen(false)
     }
 
+    const clearSearch = () => {
+        setSearchQuery("")
+    }
+
     const handleMessageSelect = (id: number, isSelected: boolean) => {
         setSelectedMessages(prev =>
             isSelected ? [...prev, id] : prev.filter(messageId => messageId !== id)
@@ -538,13 +542,27 @@ export default function Home() {
             </div>
             <div className="space-y-4">
                 <form onSubmit={handleSearch} className="flex space-x-2">
-                    <Input
-                        type="text"
-                        placeholder="Search by name, keywords..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="flex-grow"
-                    />
+                    <div className="relative flex-grow">
+                        <Input
+                            type="text"
+                            placeholder="Search by name, keywords..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pr-10"
+                        />
+                        {searchQuery && (
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3"
+                                onClick={clearSearch}
+                            >
+                                <X className="h-4 w-4" />
+                                <span className="sr-only">Clear search</span>
+                            </Button>
+                        )}
+                    </div>
                     <Button type="button" variant="outline" onClick={handleFilter}>
                         <Filter className="h-4 w-4"/>
                     </Button>
@@ -635,4 +653,3 @@ export default function Home() {
         </MainLayout>
     )
 }
-
